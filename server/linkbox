@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TUNNEL_PORT=$(netstat -tulpn | grep 10022)
+if [[ "$TUNNEL_PORT" != "" ]]; then
+  echo "LINKBOX: Reverse tunnel is open, connecting..."
+  ssh localhost -o StrictHostKeyChecking=no -l pi -i /home/linkbox/private_key -p  10022
+else
+  echo "LINKBOX: Reverse tunnel is not open"
+fi
