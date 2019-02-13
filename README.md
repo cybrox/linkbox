@@ -1,3 +1,7 @@
+This is just a proof of concept for educational purposes.
+
+------
+
 # Linkbox
 #### Preamble
 Linkbox is a small security proof-of-concept project.
