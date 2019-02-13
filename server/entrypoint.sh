@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Description: Linkbox docker server entrypoint
+# Maintainer: Sven Gehring <cbrxde@gmail.com>
 
 
 # Encrypted password for linkbox account

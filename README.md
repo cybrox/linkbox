@@ -33,7 +33,7 @@ In short:
 
 The user now has an open SSH tunnel to a device in the target network, bypassing its NAT. (Of course firewalls with deep packet inspection could still block this, but that's another story).
 
-Obviously, the user is free to do whatever he likes. For an example scenario, a german manufacturer of door communication systems exposes an HTTP API that allows third party devices to open the door without further authentication. Any device in the local network can use this endpoint. So we are just on `curl` command away from opening the front door.
+Obviously, the user is free to do whatever he likes. For an example scenario, a german manufacturer of door communication systems exposes an HTTP API that allows third party devices to open the door without further authentication. Any device in the local network can use this endpoint. **So we are just one `curl` command away from opening the front door.**
 
 
 
@@ -56,13 +56,12 @@ The following files will be used on client and server respectively.
 
 
 ## Usage
+Both, the server and client use case assume you have cloned this repository and operate from its root directory.
+
 #### Linkbox Server
 ```bash
-# Navigate to the server directory
-cd ./server
-
 # Building the server container
-docker build --no-cache --tag linkbox-server .
+docker build --no-cache --tag linkbox-server ./server
 
 # Running the server container
 docker run --rm -p 10666:22 -it linkbox-server /bin/bash
@@ -71,16 +70,12 @@ docker run --rm -p 10666:22 -it linkbox-server /bin/bash
 
 #### Linkbox Client
 ```bash
-TODO: Add script and complete this section
+# Run automated setup to connect
+./linkbox.sh <server-ip>
 
-# We don't care about the server's fingerprint since it is reset on container build
-rm /root/.ssh/known_hosts
-
-# The private key must only be accessible to us, otherwise ssh will complain
-chmod 700 ./private_key
-
-# Connect to the server via ssh and create reverse ssh runnel
-ssh -o StrictHostKeyChecking=no -p 10666 -l linkbox -i ./private_key -f -N -T -R 10022:localhost:22 <target-ip>
+# For its actual use case, linkbox should run once it has
+# booted, so we can add it to /etc/rc.local before `exit 0`
+cd <path/to/repo> && bash linkbox.sh <server-ip>
 ```
 
 
